@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0hv431d01bg7"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_1u6j7"]
+[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_pgt4i"]
+[ext_resource type="PackedScene" uid="uid://th2k1cfwktsh" path="res://gun.tscn" id="3_b6qbk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_scbp8"]
+radius = 35.0
+height = 102.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x02s7"]
+radius = 27.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bojne"]
+bg_color = Color(0.152941, 0.168627, 0.188235, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04kn6"]
+bg_color = Color(0.388235, 0.8, 0.372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("1_1u6j7")
+
+[node name="PlayerPivot" type="Marker2D" parent="."]
+position = Vector2(0, -45)
+
+[node name="HappyBoo" parent="PlayerPivot" instance=ExtResource("1_pgt4i")]
+position = Vector2(0, 45)
+
+[node name="Gun" parent="PlayerPivot" instance=ExtResource("3_b6qbk")]
+position = Vector2(0, 4)
+rotation = 0.0447047
+
+[node name="HurtBox" type="Area2D" parent="PlayerPivot"]
+unique_name_in_owner = true
+position = Vector2(0, 45)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPivot/HurtBox"]
+light_mask = 16
+visibility_layer = 16
+position = Vector2(0, -36)
+shape = SubResource("CapsuleShape2D_scbp8")
+debug_color = Color(0.882758, 0.309723, 0.341698, 0.42)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -11)
+shape = SubResource("CircleShape2D_x02s7")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.0
+offset_top = -131.0
+offset_right = 116.0
+offset_bottom = -104.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bojne")
+theme_override_styles/fill = SubResource("StyleBoxFlat_04kn6")
+value = 100.0
+show_percentage = false

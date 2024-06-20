@@ -1,0 +1,124 @@
+[gd_scene load_steps=7 format=3 uid="uid://javwisfskwt3"]
+
+[ext_resource type="Script" path="res://survivors_game.gd" id="1_h3w43"]
+[ext_resource type="PackedScene" uid="uid://c0hv431d01bg7" path="res://Player.tscn" id="2_b7xdd"]
+[ext_resource type="PackedScene" uid="uid://dw1rwokhqsg5v" path="res://tree.tscn" id="3_bjw50"]
+
+[sub_resource type="Curve2D" id="Curve2D_o82ja"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1760, 0, 0, 0, 0, 0, 1760, 990, 0, 0, 0, 0, 0, 990, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0r35w"]
+bg_color = Color(0.152941, 0.168627, 0.188235, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icafi"]
+bg_color = Color(0.388235, 0.8, 0.372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_h3w43")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1760.0
+offset_bottom = 990.0
+
+[node name="Player" parent="." instance=ExtResource("2_b7xdd")]
+position = Vector2(880, 495)
+
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-1064.89, -630)
+scale = Vector2(1.2101, 1.2101)
+curve = SubResource("Curve2D_o82ja")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+
+[node name="ProgressBar2" type="ProgressBar" parent="Player"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.0
+offset_top = -131.0
+offset_right = 116.0
+offset_bottom = -104.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_0r35w")
+theme_override_styles/fill = SubResource("StyleBoxFlat_icafi")
+value = 100.0
+show_percentage = false
+
+[node name="Tree" parent="." instance=ExtResource("3_bjw50")]
+position = Vector2(186, 907)
+
+[node name="Tree2" parent="." instance=ExtResource("3_bjw50")]
+position = Vector2(365, 445)
+
+[node name="Tree3" parent="." instance=ExtResource("3_bjw50")]
+position = Vector2(1124, 293)
+
+[node name="Tree4" parent="." instance=ExtResource("3_bjw50")]
+position = Vector2(1353, 715)
+
+[node name="Tree5" parent="." instance=ExtResource("3_bjw50")]
+position = Vector2(879, 702)
+
+[node name="Tree6" parent="." instance=ExtResource("3_bjw50")]
+position = Vector2(832, 299)
+
+[node name="Tree7" parent="." instance=ExtResource("3_bjw50")]
+position = Vector2(549, 718)
+
+[node name="Tree8" parent="." instance=ExtResource("3_bjw50")]
+position = Vector2(1357, 381)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.772549)
+
+[node name="Label" type="Label" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -74.0
+offset_right = 296.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 126
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
